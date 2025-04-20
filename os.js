@@ -473,6 +473,3 @@ function processCommand(cmdLine) {
 
     localStorage.setItem("webTestOS_FS", JSON.stringify(fileSystem));   
   }
-
-    localStorage.setItem("webTestOS_FS", JSON.stringify(fileSystem));   
-  }
