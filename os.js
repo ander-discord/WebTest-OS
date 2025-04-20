@@ -239,7 +239,7 @@ function bootOS() {
     }
   
     writeLine(" ");
-    writeLine("WebTest OS", "cyan");
+    writeLine("WebTest OS - Version 1.0", "cyan");
     writeLine("Type 'help' to begin.", "#AAAAFF");
     // writeLine("Login to WebTest OS")
     // writeLine("Password: ")
