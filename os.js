@@ -11,34 +11,34 @@ const taskbar = document.createElement('div');
 taskbar.id = 'taskbar';
 document.body.appendChild(taskbar);
 
-let fileSystem = JSON.parse(localStorage.getItem("webTest_FS")) || {
-    "readme.txt": "Welcome to the WebTest OS!",
-    "example.js": "alert('Hello from script.js');",
-    "example.ws": "echo Hello World!",
-    "calc.js": `
-      const content = ' <input type="text" id="calcInput" placeholder="Enter expression" style="width: 100%; background: #222; color: #fff; border: none; padding: 5px;" /> <div id="calcResult" style="margin-top: 5px; color: #0f0;"></div> ';
-      const win = createWindow("https://cdn2.iconfinder.com/data/icons/ios7-inspired-mac-icon-set/512/Calculator_512.png", "Calculator", content);
-    
-      setTimeout(() => {
-        const input = win.querySelector("#calcInput");
-        const result = win.querySelector("#calcResult");
-    
-        input.addEventListener("keydown", (e) => {
-          e.stopPropagation(); 
-          if (e.key === "Enter") {
-            try {
-              result.textContent = "Result: " + eval(input.value);
-            } catch (err) {
-              result.textContent = "Error: " + err.message;
-            }
+let fileSystem = JSON.parse(localStorage.getItem("webTestOS_FS")) || {
+  "readme.txt": "Welcome to the WebTest OS!",
+  "example.js": "alert('Hello from script.js');",
+  "example.ws": "echo Hello World!",
+  "calc.js": 
+    `const content = ' <input type="text" id="calcInput" placeholder="Enter expression" style="width: 100%; background: #222; color: #fff; border: none; padding: 5px;" /> <div id="calcResult" style="margin-top: 5px; color: #0f0;"></div> ';
+    const win = createWindow("https://cdn2.iconfinder.com/data/icons/ios7-inspired-mac-icon-set/512/Calculator_512.png", "Calculator", content);
+  
+    setTimeout(() => {
+      const input = win.querySelector("#calcInput");
+      const result = win.querySelector("#calcResult");
+  
+      input.addEventListener("keydown", (e) => {
+        e.stopPropagation(); 
+        if (e.key === "Enter") {
+          try {
+            result.textContent = "Result: " + eval(input.value);
+          } catch (err) {
+            result.textContent = "Error: " + err.message;
           }
-        });
-      }, 0);`
-    ,
-    "editor.js": `const content0 = '<textarea style="width: 100%; height: 100%; background: #111; color: #fff; border: none; resize: none;"> </textarea>'; const win = createWindow(null, "Text Editor", content0);`
-  };
+        }
+      });
+    }, 0);`
+  ,
+  "editor.js": `const content0 = '<textarea style="width: 100%; height: 100%; background: #111; color: #fff; border: none; resize: none;"> </textarea>'; const win = createWindow(null, "Text Editor", content0);`
+};
 
-let wallpaper_url = localStorage.getItem("WebTestOS_Wallpaper");
+let wallpaper_url = localStorage.getItem("webTestOS_Wallpaper");
 if (wallpaper_url) {
   document.body.style.backgroundImage = `url('${wallpaper_url}')`;
   document.body.style.backgroundSize = "100% 100%";
@@ -59,17 +59,17 @@ const colorMap = {
 };
 
 if (dirParam) {
-    try {
-      const restored = JSON.parse(decodeURIComponent(dirParam));
-      if (typeof restored === "object") {
-        fileSystem = restored;
-        localStorage.setItem("webTestOS_FS", JSON.stringify(fileSystem));
-        location.href = `${location.origin}${location.pathname}`;
-      }
-    } catch (e) {
-      console.error("Failed to parse backup dir:", e);
+  try {
+    const restored = JSON.parse(decodeURIComponent(dirParam));
+    if (typeof restored === "object") {
+      fileSystem = restored;
+      localStorage.setItem("webTestOS_FS", JSON.stringify(fileSystem));
+      location.href = `${location.origin}${location.pathname}`;
     }
+  } catch (e) {
+    console.error("Failed to parse backup dir:", e);
   }
+}
 
 const commands = {
   help() {
@@ -470,6 +470,9 @@ function processCommand(cmdLine) {
     history.push(cmdLine); 
     historyIndex = history.length;
     newPrompt();
+
+    localStorage.setItem("webTestOS_FS", JSON.stringify(fileSystem));   
+  }
 
     localStorage.setItem("webTestOS_FS", JSON.stringify(fileSystem));   
   }
